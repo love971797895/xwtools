@@ -31,7 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTool.cs" />
+    <Compile Include="DB\BaseSet.cs" />
+    <Compile Include="DB\QureyPara.cs" />
+    <Compile Include="DB\QureyParaConvert.cs" />
+    <Compile Include="DB\QureyType.cs" />
     <Compile Include="EncAndDec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerHelper.cs" />
@@ -50,9 +57,7 @@
   <ItemGroup>
     <Content Include="32X32.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DB\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
