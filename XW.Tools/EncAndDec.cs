@@ -215,7 +215,10 @@ namespace XW.Tools
         private static string GetSubString(string p_SrcString, int p_StartIndex, int p_Length, string p_TailString)
         {
             string myResult = p_SrcString;
-
+            if(string.IsNullOrEmpty(p_SrcString))
+            {
+                p_SrcString = "xwtools";
+            }
             Byte[] bComments = Encoding.UTF8.GetBytes(p_SrcString);
             foreach (char c in Encoding.UTF8.GetChars(bComments))
             {    //当是日文或韩文时(注:中文的范围:\u4e00 - \u9fa5, 日文在\u0800 - \u4e00, 韩文为\xAC00-\xD7A3)
