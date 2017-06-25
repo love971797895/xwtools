@@ -217,7 +217,7 @@ namespace XW.Tools
             string myResult = p_SrcString;
             if(string.IsNullOrEmpty(p_SrcString))
             {
-                p_SrcString = "xwtools";
+                p_SrcString = "xinwwantool";
             }
             Byte[] bComments = Encoding.UTF8.GetBytes(p_SrcString);
             foreach (char c in Encoding.UTF8.GetChars(bComments))
