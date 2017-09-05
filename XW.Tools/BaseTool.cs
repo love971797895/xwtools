@@ -571,7 +571,7 @@ namespace XW.Tools
                     myReq.Abort();
                 }
             }
-            return result;
+            return "";
         }
 
         /// <summary>
