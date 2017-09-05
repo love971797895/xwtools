@@ -364,6 +364,8 @@ namespace XW.Tools
             try
             {
                 myReq = (HttpWebRequest)WebRequest.Create(geturl);
+                myReq.ContentType = "text/html;charset=UTF-8";
+                myReq.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
                 response = (HttpWebResponse)myReq.GetResponse();
                 return new StreamReader(response.GetResponseStream()).ReadToEnd();
             }
@@ -514,6 +516,62 @@ namespace XW.Tools
                     myReq.Abort();
                 }
             }
+        }
+
+        public static string PostRequest(string posturl, string parm)
+        {
+            HttpWebRequest myReq = null;
+            HttpWebResponse response = null;
+            try
+            {
+                myReq = (HttpWebRequest)WebRequest.Create(posturl);
+                myReq.Method = "POST";
+                myReq.ContentType = "application/json";
+                //utf8编码
+                byte[] bs = UTF8Encoding.UTF8.GetBytes(parm);
+                myReq.ContentLength = bs.Length;
+                using (Stream reqStream = myReq.GetRequestStream())
+                {
+                    reqStream.Write(bs, 0, bs.Length);
+                    reqStream.Close();
+                }
+
+                response = (HttpWebResponse)myReq.GetResponse();
+                HttpStatusCode statusCode = response.StatusCode;
+                if (Equals(response.StatusCode, HttpStatusCode.OK))
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+            }
+            //异常处理
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    HttpStatusCode errorCode = ((HttpWebResponse)e.Response).StatusCode;
+                    string statusDescription = ((HttpWebResponse)e.Response).StatusDescription;
+                    using (StreamReader sr = new StreamReader(((HttpWebResponse)e.Response).GetResponseStream(), System.Text.Encoding.UTF8))
+                    {
+                        return sr.ReadToEnd();
+                    }
+                }
+                Tools.WriteLog.WriteRecord("Base/Push:", e.ToString());
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+                if (myReq != null)
+                {
+                    myReq.Abort();
+                }
+            }
+            return result;
         }
 
         /// <summary>
